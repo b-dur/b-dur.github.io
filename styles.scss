@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  font-family: 'Raleway', sans-serif;
+  font-size: 3vh;
+  line-height: 1.4;
+  overflow: hidden;
+  &::before, &::after {
+    position: fixed;
+    display: block;
+    content: '';
+    height: 10vh;
+    left: 0;
+    width: 100vw;
+    z-index: 1;
+  }
+  &::before {
+    top: 0;
+    background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 25%, white 95%);
+  }
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 25%, white 95%);
+  }
+}
+
+#wrapper {
+  margin-top: 10vh;
+  transition: transform 5s cubic-bezier(0.1,-0.2, 0, 1.1);
+  padding: 0 10vw;
+}
+
+center {
+  perspective: 10px;
+}
+#countdown {
+  margin: 80px 0 120px;
+  font-size: 30vh;
+  line-height: 0;
+  animation: countdown 1s 60 forwards cubic-bezier(0.22, 0.61, 0.36, 1);
+  perspective-origin: center;
+}
+
+@keyframes countdown {
+  from { transform: translateZ(-100px);}
+  to { transform: translateZ(0);}
+}
+
+#intro {
+  margin-top: 20vh;
+}
+section {
+  height: 65vh;
+  margin: 5vh 0;
+  overflow: hidden;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-exercise {
+  &:nth-child(odd) .exercise-body > p {
+    order: 1;
+  }
+}
+
+.exercise-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  > p {
+    width: 30vw;
+  }
+}
+
+
+.timer {
+  --timer: 15s;
+  --size: 100px;
+  --border-width: 10px;
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  top: 20vh;
+  left: 5vw;
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+  }
+  &::before {
+    border-radius: 100%;
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: red red white white;
+    width: calc(var(--size) - var(--border-width) * 2);
+    height: calc(var(--size) - var(--border-width) * 2);
+    transform: rotate(-135deg);
+    animation: rotate var(--timer) linear forwards;
+  }
+  &::after {
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    animation: rotate2 var(--timer) var(--timer) linear forwards;
+  }
+}
+@keyframes rotate {
+  from { }
+  to { transform: rotate(45deg);}
+}
+@keyframes rotate2 {
+  from {
+    background-color: transparent;
+    border-radius: 100%;
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: transparent transparent red red;
+    width: calc(var(--size) - var(--border-width) * 2);
+    height: calc(var(--size) - var(--border-width) * 2);
+    transform: rotate(-135deg);
+
+  }
+  to {
+    background-color: transparent;
+    border-radius: 100%;
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: transparent transparent red red;
+    width: calc(var(--size) - var(--border-width) * 2);
+    height: calc(var(--size) - var(--border-width) * 2);
+    transform: rotate(45deg);}
+}
