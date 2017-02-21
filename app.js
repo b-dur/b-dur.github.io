@@ -1,13 +1,8 @@
-require('../styles.scss');
-import data from '../data.json';
-
-
+require('./styles.scss');
+import data from './data.json';
 
 function template({img, headline, text}, index) {
-  return `<section class="section-exercise"
-    style="
-      z-index:${100-index};
-      animation-delay:${59+30*index}s;">
+  return `<section class="section-exercise" style="z-index:${100-index};">
     <h2>${headline}</h2>
     <div class="exercise-body">
       <p>${text}</p>
@@ -16,24 +11,21 @@ function template({img, headline, text}, index) {
   </section>`;
 }
 
-let container = document.getElementById('exercisesContainer');
-const exercises = data.map((x, i) => (x.html = template(x, i)) && x);
-container.innerHTML = exercises.reduce((a,b) => a + b.html, '');
+document.getElementById('exercisesContainer').innerHTML = data
+  .map((x, i) => (x.html = template(x, i)) && x)
+  .reduce((a,b) => a + b.html, '');
 
-
+let counter = 10;
 let countdown = document.getElementById('countdown');
 countdown.addEventListener('animationiteration', function () {
-  countdown.innerText = countdown.innerText - 1;
+  countdown.innerText = --counter;
+  if (!counter) {
+    nextExercise();
+    startTimer();
+  }
 });
-countdown.addEventListener('animationend', startExercise);
-function startExercise() {
-  countdown.removeEventListener('animationend', startExercise);
-  countdown.style.animationIterationCount = 61;
-  countdown.innerText = countdown.innerText - 1;
-  nextExercise();
-  startTimer();
-}
-
+countdown.innerText = counter;
+countdown.style.animationIterationCount = counter + 1;
 let timer = document.createElement('div');
 timer.className = 'timer';
 timer.addEventListener('animationend', function (e) {
@@ -44,13 +36,16 @@ timer.addEventListener('animationend', function (e) {
     };
   }
 });
+timer.addEventListener('dblclick', function () {
+  window.location.reload();
+});
 function startTimer() {
   document.body.prepend(timer);
+  document.getElementById('nextExercise').play();
 }
 function stopTimer() {
   timer.remove();
 }
-
 
 let height = 0;
 function nextExercise() {

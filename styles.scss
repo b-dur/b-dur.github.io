@@ -78,7 +78,6 @@ h1, h2 {
   }
 }
 
-
 .timer {
   --timer: 15s;
   --size: 100px;
@@ -88,6 +87,7 @@ h1, h2 {
   height: var(--size);
   top: 20vh;
   left: 5vw;
+  z-index: 1000;
   &::before, &::after {
     content: '';
     display: inline-block;
