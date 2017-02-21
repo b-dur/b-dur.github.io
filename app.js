@@ -36,6 +36,9 @@ timer.addEventListener('animationend', function (e) {
     };
   }
 });
+timer.addEventListener('dblclick', function () {
+  window.location.reload();
+});
 function startTimer() {
   document.body.prepend(timer);
   document.getElementById('nextExercise').play();
