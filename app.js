@@ -53,3 +53,7 @@ function nextExercise() {
   document.getElementById('wrapper').style.transform = `translateY(${height}vh)`;
   return (height > -70 * (data.length + 1));
 }
+
+document.getElementById('restart').addEventListener('click', () => {
+  window.location.reload();
+});
