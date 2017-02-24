@@ -33,6 +33,8 @@ timer.addEventListener('animationend', function (e) {
     stopTimer();
     if(nextExercise()) {
       startTimer();
+    } else {
+      exerciseFinnished();
     };
   }
 });
@@ -45,6 +47,9 @@ function startTimer() {
 }
 function stopTimer() {
   timer.remove();
+}
+function exerciseFinnished() {
+  document.getElementById('exerciseFinished').play();
 }
 
 let height = 0;
