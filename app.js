@@ -11,6 +11,9 @@ function template({img, headline, text}, index) {
   </section>`;
 }
 
+let progress = document.getElementById('progress')
+let currentExercise = 1;
+
 document.getElementById('exercisesContainer').innerHTML = data
   .map((x, i) => (x.html = template(x, i)) && x)
   .reduce((a,b) => a + b.html, '');
@@ -20,7 +23,7 @@ let countdown = document.getElementById('countdown');
 countdown.addEventListener('animationiteration', function () {
   countdown.innerText = --counter;
   if (!counter) {
-    nextExercise();
+    startExercise();
     startTimer();
   }
 });
@@ -52,13 +55,62 @@ function exerciseFinnished() {
   document.getElementById('exerciseFinished').play();
 }
 
-let height = 0;
-function nextExercise() {
-  height += -70;
-  document.getElementById('wrapper').style.transform = `translateY(${height}vh)`;
-  return (height > -70 * (data.length + 1));
+function startExercise() {
+  moveContent();
+  progress.steps = data.length;
+  progress.nextStep(0);
+  return (currentExercise <= data.length);
 }
 
-document.getElementById('restart').addEventListener('click', () => {
-  window.location.reload();
-});
+function nextExercise() {
+  currentExercise++;
+  moveContent();
+  progress.nextStep();
+
+  return (currentExercise <= data.length);
+}
+
+function moveContent() {
+  document.getElementById('wrapper').style.transform = `translateY(${-70 * currentExercise}vh)`;
+}
+
+document.getElementById('restart').addEventListener('click', window.location.reload);
+
+class ProgressBar extends HTMLElement {
+  constructor(){
+    super();
+    this.steps = 0;
+    this.step = 0;
+  }
+
+  nextStep(value) {
+    if (typeof value === 'undefined') {
+      this.step++;
+    } else {
+      this.step = value;
+    }
+    this.render();
+  }
+
+  render() {
+    let classes = [];
+    for (let i = 0; i < this.steps; i++) {
+      if (i < this.step) {
+        classes.push('done');
+      } else if (i === this.step) {
+        classes.push('current');
+      } else {
+        classes.push('');
+      }
+    }
+    let lis = classes.map(x => `<li class="${x}"></li>`).reduce((a,b) => a + b, '');
+    this.innerHTML = `<ul id="progress">${lis}</ul>`;
+  }
+
+  connectedCallback() {
+    this.steps = this.getAttribute('steps');
+    this.step = this.getAttribute('step');
+    this.render();
+  }
+}
+window.customElements.define("progress-bar", ProgressBar);

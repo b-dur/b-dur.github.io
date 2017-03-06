@@ -107,7 +107,7 @@ h1, h2 {
     border-radius: 100%;
     border-width: var(--border-width);
     border-style: solid;
-    border-color: red red white white;
+    border-color: tomato tomato white white;
     width: calc(var(--size) - var(--border-width) * 2);
     height: calc(var(--size) - var(--border-width) * 2);
     transform: rotate(-135deg);
@@ -130,7 +130,7 @@ h1, h2 {
     border-radius: 100%;
     border-width: var(--border-width);
     border-style: solid;
-    border-color: transparent transparent red red;
+    border-color: transparent transparent tomato tomato;
     width: calc(var(--size) - var(--border-width) * 2);
     height: calc(var(--size) - var(--border-width) * 2);
     transform: rotate(-135deg);
@@ -141,8 +141,38 @@ h1, h2 {
     border-radius: 100%;
     border-width: var(--border-width);
     border-style: solid;
-    border-color: transparent transparent red red;
+    border-color: transparent transparent tomato tomato;
     width: calc(var(--size) - var(--border-width) * 2);
     height: calc(var(--size) - var(--border-width) * 2);
     transform: rotate(45deg);}
+}
+
+#progress {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  bottom: 1vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  z-index: 2;
+  li {
+    display: inline-block;
+    flex-grow: 1;
+    margin: 0 1vw;
+    background-color: lightgray;
+    height: 1vh;
+    transition: all 1s;
+    &.done {
+      background-color: steelblue;
+    }
+    &.current {
+      animation: pulsing 1s alternate infinite;
+      @keyframes pulsing {
+        from { background-color: lightgray;}
+        to {background-color: steelblue;}
+      }
+    }
+  }
 }
