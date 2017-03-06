@@ -523,7 +523,7 @@ function template({img, headline, text}, index) {
 }
 
 let progress = document.getElementById('progress')
-let currentExercise = 0;
+let currentExercise = 1;
 
 document.getElementById('exercisesContainer').innerHTML = __WEBPACK_IMPORTED_MODULE_0__data_json___default.a
   .map((x, i) => (x.html = template(x, i)) && x)
@@ -578,7 +578,6 @@ function nextExercise() {
   moveContent();
   progress.nextStep();
 
-  document.getElementById('progress').dataset.step = currentExercise;
   return (currentExercise <= __WEBPACK_IMPORTED_MODULE_0__data_json___default.a.length);
 }
 
@@ -626,7 +625,6 @@ class ProgressBar extends HTMLElement {
   }
 }
 window.customElements.define("progress-bar", ProgressBar);
-
 
 
 /***/ })
