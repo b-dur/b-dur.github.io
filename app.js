@@ -74,7 +74,7 @@ function moveContent() {
   document.getElementById('wrapper').style.transform = `translateY(${-70 * currentExercise}vh)`;
 }
 
-document.getElementById('restart').addEventListener('click', window.location.reload);
+document.getElementById('restart').addEventListener('click', function(){window.location.reload();});
 
 class ProgressBar extends HTMLElement {
   constructor(){
